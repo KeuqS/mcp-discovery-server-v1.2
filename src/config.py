@@ -1,6 +1,11 @@
 # src/config.py
 import os
-import torch 
+
+try:
+    import torch
+    _has_cuda = torch.cuda.is_available()
+except ImportError:
+    _has_cuda = False
 
 class Config:
     
@@ -42,7 +47,7 @@ class Config:
     CB_HALF_OPEN_SUCCESS = int(os.getenv("CB_HALF_OPEN_SUCCESS", "2"))
     
     # Device
-    DEVICE = os.getenv("DEVICE", "cuda" if torch.cuda.is_available() else "cpu")
+    DEVICE = os.getenv("DEVICE", "cuda" if _has_cuda else "cpu")
     
 
     # Quantization controls

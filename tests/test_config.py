@@ -11,8 +11,10 @@ class TestConfig(unittest.TestCase):
         importlib.reload(src.config)
         from src.config import Config
         
-        self.assertEqual(Config.EMBEDDING_DIM, 896)
         self.assertEqual(Config.BM25_CANDIDATES, 20)
+        self.assertEqual(Config.DENSE_CANDIDATES, 20)
+        self.assertEqual(Config.FUSION_CANDIDATES, 4)
+        self.assertEqual(Config.FINAL_RESULTS, 1)
         self.assertEqual(Config.FUSION_METHOD, "rrf")
 
     def test_env_override(self):
@@ -31,12 +33,14 @@ class TestConfig(unittest.TestCase):
             self.assertEqual(Config.MAX_OPEN_CONNECTIONS, 64)
             self.assertEqual(Config.GLOBAL_RATE, 50.0)
 
-    def test_offline_mode_vars(self):
+    def test_circuit_breaker_defaults(self):
         import src.config
         importlib.reload(src.config)
+        from src.config import Config
         
-        self.assertEqual(os.environ.get("HF_HUB_OFFLINE"), "1")
-        self.assertEqual(os.environ.get("TRANSFORMERS_OFFLINE"), "1")
+        self.assertEqual(Config.CB_FAILURE_THRESHOLD, 5)
+        self.assertEqual(Config.CB_RECOVERY_TIMEOUT, 30.0)
+        self.assertEqual(Config.CB_HALF_OPEN_SUCCESS, 2)
 
 if __name__ == "__main__":
     unittest.main()

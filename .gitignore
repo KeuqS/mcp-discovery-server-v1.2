@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# VS Code Runner
+tempCodeRunnerFile*
+
+# Environment variables
+.env
+.env.*
+!.env.example

@@ -1,5 +1,9 @@
 # Ansam: MCP Discovery Server (v1.2)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Good First Issues](https://img.shields.io/badge/good%20first%20issues-welcome-7057ff.svg)](https://github.com/MriBoyd/mcp-discovery-server-v1.2/labels/good%20first%20issue)
+
 Ansam is a high-performance **Model Context Protocol (MCP) Discovery Server** designed to manage, index, and proxy requests across a massive ecosystem of 1000+ MCP servers. It provides AI models with a unified interface to search for specific tools using advanced hybrid retrieval and execute them safely via a dynamic, LRU-cached proxy system.
 
 ## 🚀 Key Features
@@ -36,15 +40,27 @@ Ansam acts as an intelligent gateway between an AI model and a vast collection o
 -   Python 3.10+
 -   **Qdrant** Vector Database (Running on port 6333)
     ```bash
-    docker run -p 6333:6333 qdrant/qdrant
+    # Using Docker
+    docker run -d --name qdrant -p 6333:6333 -p 6334:6334 qdrant/qdrant
+
+    # Or using Docker Compose
+    docker-compose up -d
     ```
 
 ### 1. Clone & Install Dependencies
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/MriBoyd/mcp-discovery-server-v1.2.git
 cd mcp-discovery-server-v1.2
+
+# Create virtual environment and install dependencies
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+pip install -e ".[dev]"
+
+# Set up local configuration
+cp .env.example .env
 ```
 
 ---
@@ -125,6 +141,15 @@ pytest tests/
 # Benchmarks
 python tests/benchmark_search.py
 ```
+
+---
+
+## 🤝 Contributing
+
+Contributions are warmly welcomed! We are actively cultivating a beginner-friendly open-source community.
+
+- Looking for a good place to start? Check our curated [Good First Issues](https://github.com/MriBoyd/mcp-discovery-server-v1.2/labels/good%20first%20issue).
+- Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for local development setup, testing, and pull request guidelines.
 
 ---
 

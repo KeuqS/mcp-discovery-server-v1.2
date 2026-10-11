@@ -3,6 +3,8 @@ from unittest.mock import patch, MagicMock
 import sys
 import os
 
+from src import extract_registry
+
 class TestExtractRegistry(unittest.TestCase):
     
     @patch("subprocess.run")
@@ -10,9 +12,7 @@ class TestExtractRegistry(unittest.TestCase):
         # We need to simulate running extract_registry.py as a script
         # Mock sys.argv
         with patch.object(sys, 'argv', ['extract_registry.py', '--name', 'test_server', '--transport', 'stdio', '--command', 'node']):
-            import extract_registry
-            import importlib
-            importlib.reload(extract_registry)
+            extract_registry.main()
             
             # The script calls subprocess.run with a list that includes the path to mcp_registry_manager.py
             # and our forwarded args

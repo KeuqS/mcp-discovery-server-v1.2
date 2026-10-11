@@ -56,7 +56,8 @@ class TestCircuitBreaker(unittest.IsolatedAsyncioTestCase):
     async def test_half_open_to_closed(self):
         cb = CircuitBreaker(failure_threshold=1, recovery_timeout=0.1, half_open_success=2)
         async def fail_func(): raise ValueError("fail")
-        await self.assertRaises(ValueError, cb.call, fail_func)
+        with self.assertRaises(ValueError):
+            await cb.call(fail_func)
         
         await asyncio.sleep(0.15)
         
@@ -70,7 +71,8 @@ class TestCircuitBreaker(unittest.IsolatedAsyncioTestCase):
     async def test_half_open_to_open_on_failure(self):
         cb = CircuitBreaker(failure_threshold=1, recovery_timeout=0.1)
         async def fail_func(): raise ValueError("fail")
-        await self.assertRaises(ValueError, cb.call, fail_func)
+        with self.assertRaises(ValueError):
+            await cb.call(fail_func)
         
         await asyncio.sleep(0.15)
         
